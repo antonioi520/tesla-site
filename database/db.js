@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
 
 export const db = {};
-const sequelize = new Sequelize("testtesladb", "dbusertesttesla", "prodo123", {
-    host: 'khoun.spicerack.dreamhost.com',
+const sequelize = new Sequelize("", "", "", {
+    host: '',
     dialect: 'mysql',
 
 
