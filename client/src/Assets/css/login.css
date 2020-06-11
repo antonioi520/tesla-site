@@ -1,0 +1,43 @@
+.loginbox{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: auto;
+    width: 25%;
+    height:400px;
+    background-color:ghostwhite;
+}
+.regbox{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: auto;
+    width: 25%;
+    height:600px;
+    background-color:ghostwhite;
+}
+.inputbox{
+    margin-bottom: 0px;
+    width:50%;
+    margin-left: 25%;
+}
+.loginHeader{
+    margin-bottom: 30px;
+    padding-top: 20px;
+}
+.loginbutton{
+    margin-bottom: 10px;
+}
+.loginA{
+    color:red;
+}
+
+.reginputbox{
+    margin-bottom: 0px;
+    width:100%;
+
+}
+body {
+    height: 100%;
+}
+.bglog{
+    min-height:100vh;
+    background-image: url('../img/tesla2.jpg');
+    filter:grayscale(50%);
+}
