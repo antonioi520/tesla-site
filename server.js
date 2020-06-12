@@ -19,6 +19,11 @@ app.get('/', (req, res)=> {
 import User1 from './routes/Users.js';
 app.use('/users', User1);
 
+import Listing1 from './routes/Listings.js';
+app.use('/listing', Listing1);
+
+
+
 app.listen(PORT,()=>{
     console.log(`Server running on PORT ${PORT}`);
 });
