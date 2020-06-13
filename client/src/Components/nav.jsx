@@ -27,6 +27,7 @@ class Nav extends Component{
                             <Link to={'/FAQ'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">FAQ</a></li></Link>
                             <Link to={'/Contact'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">Contact</a></li></Link>
                             <Link to={'/Listings'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">Listings</a></li></Link>
+                            <Link to={'/AddListing'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">Add Listing</a></li></Link>
                             <Link to={'/Profile'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">Profile</a></li></Link>
                             <li className="nav-item"><a className="nav-link js-scroll-trigger" href="" onClick={this.logOut.bind(this)}>Logout</a></li>
                         </ul>

@@ -12,6 +12,9 @@ import Landing from '../src/Components/Landing'
 import {BrowserRouter, Link, Route} from 'react-router-dom';
 import Login1 from '../src/Components/login';
 import { Button, FormGroup, FormControl } from "react-bootstrap";
+import AddListing from "./Components/addlisting";
+import AllListings from "./Components/alllistings";
+
 
 class App extends Component {
     state = {
@@ -46,10 +49,13 @@ class App extends Component {
                 <Route exact={true} path={"/About"} component={About} />
                 <Route exact={true} path={"/FAQ"} component={FAQ} />
                 <Route exact={true} path={"/Contact"} component={Contact} />
-                <Route exact={true} path={"/Listings"} component={Listings} />
+                {/*<Route exact={true} path={"/Listings"} component={Listings} />*/}
                 <Route exact={true} path={"/Login"} component={Login} />
                 <Route exact={true} path={"/Register"} component={Register} />
                 <Route exact={true} path={"/Profile"} component={Profile} />
+                <Route exact={true} path={"/AddListing"} component={AddListing} />
+                <Route exact={true} path={"/Listings"} component={AllListings} />
+
 
             </div>
             </BrowserRouter>
