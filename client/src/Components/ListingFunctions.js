@@ -40,6 +40,12 @@ export const allListings = getAll => {
         .get('/listing/AllListings')
 }
 
+export const userListings = (email) => {
+    return axios
+        .get(`/listing/UserListings/${email}`)
+}
+
+
 export const getListing = myListing => {
     return axios
         .get('/listing/Listing/:id')

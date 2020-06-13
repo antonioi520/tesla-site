@@ -20,7 +20,8 @@ export const Listing1 = Listings.post('/AddListing', (req, res) => {
         year: req.body.year,
         color: req.body.color,
         summary: req.body.summary,
-        date_created: today
+        date_created: today,
+        created_by: req.body.created_by
     }
     Listing.findOne({
         where:{
@@ -51,6 +52,20 @@ Listing1.get('/AllListings', (req, res) => {
                     err.message || "Some error occurred while retrieving tutorials."
             });
         });
+})
+
+Listing1.get('/UserListings/:email', (req, res) => {
+    Listing.findAll({
+        where: {
+            email: req.params.email
+        }}).then(data => {
+            res.send(data);
+        }).catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while retrieving tutorials."
+                });
+            });
 })
 
 Listing1.get('/Listing/:id', (req, res) => {
