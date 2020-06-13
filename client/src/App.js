@@ -9,7 +9,7 @@ import Login from '../src/Components/login';
 import Register from '../src/Components/register';
 import Profile from '../src/Components/profile';
 import Landing from '../src/Components/Landing'
-import {BrowserRouter, Link, Route} from 'react-router-dom';
+import {BrowserRouter, Link, Route, Redirect } from 'react-router-dom';
 import Login1 from '../src/Components/login';
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import AddListing from "./Components/addlisting";
@@ -39,8 +39,6 @@ class App extends Component {
     };
 
     render() {
-
-
         return (
             <BrowserRouter>
             <div className="App">
@@ -50,20 +48,34 @@ class App extends Component {
                 <Route exact={true} path={"/FAQ"} component={FAQ} />
                 <Route exact={true} path={"/Contact"} component={Contact} />
                 {/*<Route exact={true} path={"/Listings"} component={Listings} />*/}
-                <Route exact={true} path={"/Login"} component={Login} />
-                <Route exact={true} path={"/Register"} component={Register} />
-                <Route exact={true} path={"/Profile"} component={Profile} />
-                <Route exact={true} path={"/AddListing"} component={AddListing} />
+                <AuthRoute exact={true} path={"/Login"} component={Login} />
+                <AuthRoute exact={true} path={"/Register"} component={Register} />
+                <PrivateRoute exact={true} path={"/Profile"} component={Profile} />
+                <PrivateRoute exact={true} path={"/AddListing"} component={AddListing} />
                 <Route exact={true} path={"/Listings"} component={AllListings} />
-
-
             </div>
             </BrowserRouter>
-
         );
     }
 }
 
+// create a private route, if user is not logged in redirect to login page
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+        localStorage.userToken === localStorage.getItem('userToken')
+            ? <Component {...props} />
+            : <Redirect to='/Login' />
+    )} />
+)
+
+// create a private route, if user is logged in and trying to access register/login then redirect to home
+const AuthRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+        localStorage.userToken !== localStorage.getItem('userToken')
+            ? <Component {...props} />
+            : <Redirect to='/' />
+    )} />
+)
 
 const portfolioLinks = [
     {

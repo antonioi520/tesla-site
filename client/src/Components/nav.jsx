@@ -10,7 +10,9 @@ class Nav extends Component{
 
     render(){
         const loginRegLink = (
+
                         <ul className="navbar-nav text-uppercase ml-auto">
+
                             <Link to={'/'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">Home</a></li></Link>
                             <Link to={'/About'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">About</a></li></Link>
                             <Link to={'/FAQ'}><li className="nav-item"><a className="nav-link js-scroll-trigger" href="">FAQ</a></li></Link>
