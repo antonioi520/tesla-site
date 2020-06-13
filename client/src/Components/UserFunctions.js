@@ -10,6 +10,8 @@ export const register = newUser => {
         })
         .then(res => {
             console.log("registered")
+        }).catch( err => {
+            console.log(err)
         })
 }
 export const login = user => {
