@@ -17,10 +17,9 @@ export const addListing = newListing => {
         })
 }
 
-export const updateListing = putListing => {
+export const updateListing = (userid, putListing) => {
     return axios
-        .put('/listing/UpdateListing/:id', {
-            id: putListing.id,
+        .put(`/listing/UpdateListing/${userid}`, {
             first_name: putListing.first_name,
             last_name: putListing.last_name,
             email: putListing.email,
@@ -46,7 +45,7 @@ export const userListings = (email) => {
 }
 
 
-export const getListing = myListing => {
+export const getListing = (myListing) => {
     return axios
-        .get('/listing/Listing/:id')
+        .get(`/listing/Listing/${myListing}`)
 }

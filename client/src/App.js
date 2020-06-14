@@ -14,7 +14,7 @@ import Login1 from '../src/Components/login';
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import AddListing from "./Components/addlisting";
 import AllListings from "./Components/alllistings";
-
+import UpdateListing from "./Components/UpdateListing";
 
 class App extends Component {
     state = {
@@ -53,6 +53,8 @@ class App extends Component {
                 <PrivateRoute exact={true} path={"/Profile"} component={Profile} />
                 <PrivateRoute exact={true} path={"/AddListing"} component={AddListing} />
                 <Route exact={true} path={"/Listings"} component={AllListings} />
+                <PrivateRoute exact={true} path={"/UpdateListing"} component={UpdateListing} />
+
             </div>
             </BrowserRouter>
         );
