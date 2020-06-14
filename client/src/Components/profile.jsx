@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import jwt_decode from 'jwt-decode';
 import {userListings} from "./ListingFunctions";
+import { Link } from "react-router-dom";
 
 class Profile extends Component{
     constructor(props) {
@@ -61,12 +62,13 @@ class Profile extends Component{
             currentListing: listing,
             currentIndex: index
         });
+        console.log(this.state.currentListing);
     }
 
 
 
     render(){
-        const { userListings, currentIndex } = this.state;
+        const { userListings, currentIndex, currentListing } = this.state;
         return(
             <div className="container">
                 <div className="jumbotron mt-5">
@@ -107,6 +109,19 @@ class Profile extends Component{
                                 </li>
                             ))}
                         </ul>
+                        {currentListing ? (
+                        <Link
+                            to={{pathname: "/UpdateListing", state:{currentListing: currentListing.id}}}
+                            className="badge badge-warning"
+                        >
+                            Edit
+                        </Link>
+                            ): (
+                            <div>
+                                <br />
+                                <p>Choose a listing to modify</p>
+                            </div>
+                        )}
                     </table>
 
                 </div>
