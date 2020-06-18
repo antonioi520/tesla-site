@@ -40,4 +40,8 @@ body {
     min-height:100vh;
     background-image: url('../img/tesla2.jpg');
     filter:grayscale(50%);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
 }
