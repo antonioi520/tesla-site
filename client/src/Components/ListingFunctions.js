@@ -9,7 +9,24 @@ export const addListing = newListing => {
             model: newListing.model,
             year: newListing.year,
             color: newListing.color,
-            summary: newListing.summary
+            summary: newListing.summary,
+            vin: newListing.vin,
+            listing_type: newListing.listing_type,
+            battery: newListing.battery,
+            city: newListing.city,
+            state: newListing.state,
+            mileage: newListing.mileage,
+            asking_price: newListing.asking_price,
+            car_condition: newListing.car_condition,
+            autopilot: newListing.autopilot,
+            warranty: newListing.warranty,
+            self_driving: newListing.self_driving,
+            modifications: newListing.modifications,
+            made_repairs: newListing.made_repairs,
+            own_title: newListing.own_title
+            // thumbnail: newListing.thumbnail,
+            // sticker: newListing.sticker,
+            // pictures: newListing.pictures
         }).then(res => {
             console.log("added listing")
         }).catch( err => {
@@ -26,7 +43,24 @@ export const updateListing = (userid, putListing) => {
             model: putListing.model,
             year: putListing.year,
             color: putListing.color,
-            summary: putListing.summary
+            summary: putListing.summary,
+            vin: putListing.vin,
+            listing_type: putListing.listing_type,
+            battery: putListing.battery,
+            city: putListing.city,
+            state: putListing.state,
+            mileage: putListing.mileage,
+            asking_price: putListing.asking_price,
+            car_condition: putListing.car_condition,
+            autopilot: putListing.autopilot,
+            warranty: putListing.warranty,
+            self_driving: putListing.self_driving,
+            modifications: putListing.modifications,
+            made_repairs: putListing.made_repairs,
+            own_title: putListing.own_title
+            // thumbnail: putListing.thumbnail,
+            // sticker: putListing.sticker,
+            // pictures: putListing.pictures
         }).then(res => {
             console.log("updated listing")
         }).catch( err => {

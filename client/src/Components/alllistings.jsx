@@ -84,27 +84,65 @@ class AllListings extends Component{
                         </div>*/}
                     </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-6" style={{margin:"auto", width:"50%"}}>
                     <h4>All Listings</h4>
 
-                    <ul className="list-group">
+                    <div className="">
                         {listings &&
                         listings.map((listings, index) => (
-                            <li
-                                className={
-                                    "list-group-item " +
-                                    (index === currentIndex ? "active" : "")
-                                }
-                                onClick={() => this.setActiveListing(listings, index)}
-                                key={index}
-                            >
-                                {listings.model}
-                            </li>
+                            <div className={"testList" + (index === currentIndex ? "active" : "")}>
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-4">
+
+                                        </div>
+                                        <div className="col-md-4">
+                                            <small className="forsale">For Sale</small>
+                                        </div>
+                                        <div className="col-md-4">
+
+                                        </div>
+                                    </div>
+                                    <div className="row" style={{textAlign:"center"}}>
+                                        <div className="col-md-4">
+                                            {/*<a className="testimg" href="https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg" style={{backgroundImage: "url(" + 'https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg' + ")"}}/>*/}
+                                            <img src='https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg' height='100' width='190' />
+                                        </div>
+                                        <div className="col-md-4">
+                                            <h4 className="text-uppercase" style={{fontSize:"25px", textAlign:"left"}}>{listings.year} / {listings.model} / {listings.color}</h4>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <h3 className="listingsTextAsking text-uppercase">Asking Price</h3>
+                                            <p className="listingsPrice">$ 45,000.00</p>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-4">
+
+                                        </div>
+                                        <div className="col-md-4">
+                                            <p style={{textAlign:"left", margin:"0", lineHeight:"1.2"}}>{listings.summary}</p>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <ul>
+                                            <ul><h3 className="listingsText text-uppercase listing-head">Listing date</h3>
+                                            <p className="listingsText1">{listings.date_created}</p></ul>
+                                            <ul><h3 className="listingsText text-uppercase listing-head">Location</h3>
+                                            <p className="listingsText1">San Tan Valley, Arizona</p></ul>
+                                            <ul><h3 className="listingsText text-uppercase listing-head">Conditon</h3>
+                                            <p className="listingsText1">Excellent</p></ul>
+                                            <ul><h3 className="listingsText text-uppercase listing-head">Mileage</h3>
+                                            <p className="listingsText1">12,720 miles</p></ul>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
 
                 </div>
-                <div className="col-md-6">
+                {/*<div className="col-md-6">
                     {currentListing ? (
                         <div>
                             <h4>Listing</h4>
@@ -140,7 +178,7 @@ class AllListings extends Component{
                             <p>Please click on a Listing...</p>
                         </div>
                     )}
-                </div>
+                </div>*/}
             </div>
         )
 

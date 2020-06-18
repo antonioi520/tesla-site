@@ -1,16 +1,16 @@
 import Express from "express";
-const Listings = Express.Router();
+const TeslaListings = Express.Router();
 import cors from "cors";
 import jwt from "jsonwebtoken";
 
 import Listing from "../models/Listing.js";
 import bcrypt from "bcrypt";
 
-Listings.use(cors());
+TeslaListings.use(cors());
 
 process.env.SECRET_KEY = 'secret';
 
-export const Listing1 = Listings.post('/AddListing', (req, res) => {
+export const Listing1 = TeslaListings.post('/AddListing', (req, res) => {
     const today = new Date();
     const listingData = {
         first_name: req.body.first_name,
@@ -21,7 +21,23 @@ export const Listing1 = Listings.post('/AddListing', (req, res) => {
         color: req.body.color,
         summary: req.body.summary,
         date_created: today,
-        created_by: req.body.created_by
+        vin: req.body.vin,
+        listing_type: req.body.listing_type,
+        battery: req.body.battery,
+        city: req.body.city,
+        state: req.body.state,
+        mileage: req.body.mileage,
+        asking_price: req.body.asking_price,
+        car_condition: req.body.car_condition,
+        autopilot: req.body.autopilot,
+        warranty: req.body.warranty,
+        self_driving: req.body.self_driving,
+        modifications: req.body.modifications,
+        made_repairs: req.body.made_repairs,
+        own_title: req.body.own_title,
+        thumbnail: req.body.thumbnail,
+        sticker: req.body.sticker,
+        pictures: req.body.pictures
     }
     Listing.findOne({
         where:{

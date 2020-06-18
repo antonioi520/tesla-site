@@ -15,7 +15,6 @@ app.get('/', (req, res)=> {
 });
 
 
-//no worky
 import User1 from './routes/Users.js';
 app.use('/users', User1);
 
