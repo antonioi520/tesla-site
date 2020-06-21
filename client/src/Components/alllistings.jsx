@@ -63,7 +63,6 @@ class AllListings extends Component{
 
     render(){
         const { listings, currentListing, currentIndex } = this.state;
-
         return(
             <div className="list row" style={{paddingTop: "100px"}}>
                 <div className="col-md-8">
@@ -124,7 +123,7 @@ class AllListings extends Component{
 
                                         </div>
                                         <div className="col-md-4">
-                                            <p style={{textAlign:"left", margin:"0", lineHeight:"1.2"}}>{listings.summary}</p>
+                                            <p style={{textAlign:"left", margin:"0", lineHeight:"1.2"}}>{listings.summary.substring(0,270)}...</p>
                                         </div>
                                         <div className="col-md-4">
                                             <ul>
