@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {allListings} from "./ListingFunctions";
 import NumberFormat from "react-number-format";
 
+
 class AllListings extends Component{
     constructor(props) {
         super(props);
@@ -107,7 +108,8 @@ class AllListings extends Component{
                                     <div className="row" style={{textAlign:"center"}}>
                                         <div className="col-md-4">
                                             {/*<a className="testimg" href="https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg" style={{backgroundImage: "url(" + 'https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg' + ")"}}/>*/}
-                                            <img src='https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg' height='100' width='190' />
+                                            <img src={process.env.PUBLIC_URL + `/imgs/${listings.thumbnail}`} height='100' width='190' />
+
                                         </div>
                                         <div className="col-md-4">
                                             <h4 className="text-uppercase" style={{fontSize:"25px", textAlign:"left"}}>{listings.year} / {listings.model} / {listings.battery} / {listings.color}</h4>

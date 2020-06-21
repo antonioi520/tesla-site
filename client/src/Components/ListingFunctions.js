@@ -23,8 +23,8 @@ export const addListing = newListing => {
             self_driving: newListing.self_driving,
             modifications: newListing.modifications,
             made_repairs: newListing.made_repairs,
-            own_title: newListing.own_title
-            // thumbnail: newListing.thumbnail,
+            own_title: newListing.own_title,
+            thumbnail: newListing.thumbnail,
             // sticker: newListing.sticker,
             // pictures: newListing.pictures
         }).then(res => {

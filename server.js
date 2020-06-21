@@ -2,7 +2,7 @@ import Express from "express";
 const app = new Express();
 import cors from "cors";
 import bodyParser from "body-parser";
-
+import fileUpload from "express-fileupload";
 
 const PORT = process.env.PORT || 4000;
 

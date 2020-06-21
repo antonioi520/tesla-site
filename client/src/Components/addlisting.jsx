@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {addListing} from './ListingFunctions';
+import axios from 'axios'
 
 class AddListing extends Component {
     constructor(props) {
@@ -26,27 +27,28 @@ class AddListing extends Component {
             modifications: '',
             made_repairs: '',
             own_title: '',
-            // thumbnail: '',
+            thumbnail: '',
             // sticker: '',
             // pictures: '',
         }
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
-        //this.handleModelRadioButton = this.handleModelRadioButton.bind(this)
+        this.onFileChange = this.onFileChange.bind(this)
+    }
+
+    onFileChange(e) {
+        this.setState({ thumbnail: e.target.files[0] })
     }
 
     onChange(e){
         this.setState({[e.target.name]: e.target.value})
     }
 
-    handleModelRadioButton(value) {
-        this.setState({
-            model: value
-        });
-    }
+
 
     onSubmit(e){
         e.preventDefault()
+
         const listing = {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
@@ -69,16 +71,45 @@ class AddListing extends Component {
             modifications: this.state.modifications,
             made_repairs: this.state.made_repairs,
             own_title: this.state.own_title,
-            // thumbnail: this.state.,
+            thumbnail: this.state.thumbnail,
             // sticker: this.state.,
             // pictures: this.state.
         }
-
-        addListing(listing).then(res => {
+        const formData = new FormData()
+        formData.append('first_name', this.state.first_name)
+        formData.append('last_name', this.state.last_name)
+        formData.append('email', this.state.email)
+        formData.append('model', this.state.model)
+        formData.append('year', this.state.year)
+        formData.append('color', this.state.color)
+        formData.append('summary', this.state.summary)
+        formData.append('vin', this.state.vin)
+        formData.append('listing_type', this.state.listing_type)
+        formData.append('battery', this.state.battery)
+        formData.append('city', this.state.city)
+        formData.append('state', this.state.state)
+        formData.append('mileage', this.state.mileage)
+        formData.append('asking_price', this.state.asking_price)
+        formData.append('car_condition', this.state.car_condition)
+        formData.append('autopilot', this.state.autopilot)
+        formData.append('warranty', this.state.warranty)
+        formData.append('self_driving', this.state.self_driving)
+        formData.append('modifications', this.state.modifications)
+        formData.append('made_repairs', this.state.made_repairs)
+        formData.append('own_title', this.state.own_title)
+        formData.append('thumbnail', this.state.thumbnail)
+        axios.post("/listing/AddListing", formData, {
+        }).then(res => {
             this.props.history.push(`/Listings`)
+            console.log(res)
         })
+        // addListing(listing).then(res => {
+        //     this.props.history.push(`/Listings`)
+        // })
 
     }
+
+
 
     render(){
         return(
@@ -934,7 +965,7 @@ class AddListing extends Component {
                             </div>
                             <div  className="form-row">
                                 <div className=" tleft col-md-12">
-                                    <input type="file" id="thumbnail" name="thumbnail" accept="image/*" />
+                                    <input type="file" id="thumbnail" name="thumbnail" accept="image/*" onChange={this.onFileChange} />
                                 </div>
                             </div>
 
