@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {allListings} from "./ListingFunctions";
+import NumberFormat from "react-number-format";
 
 class AllListings extends Component{
     constructor(props) {
@@ -97,7 +98,7 @@ class AllListings extends Component{
 
                                         </div>
                                         <div className="col-md-4">
-                                            <small className="forsale">For Sale</small>
+                                            <small className="forsale">{listings.listing_type}</small>
                                         </div>
                                         <div className="col-md-4">
 
@@ -109,11 +110,11 @@ class AllListings extends Component{
                                             <img src='https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg' height='100' width='190' />
                                         </div>
                                         <div className="col-md-4">
-                                            <h4 className="text-uppercase" style={{fontSize:"25px", textAlign:"left"}}>{listings.year} / {listings.model} / {listings.color}</h4>
+                                            <h4 className="text-uppercase" style={{fontSize:"25px", textAlign:"left"}}>{listings.year} / {listings.model} / {listings.battery} / {listings.color}</h4>
                                         </div>
                                         <div className="col-md-4">
                                             <h3 className="listingsTextAsking text-uppercase">Asking Price</h3>
-                                            <p className="listingsPrice">$ 45,000.00</p>
+                                            <p className="listingsPrice">$ <NumberFormat value={listings.asking_price} displayType={'text'} thousandSeparator={true} />.00</p>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -128,11 +129,11 @@ class AllListings extends Component{
                                             <ul><h3 className="listingsText text-uppercase listing-head">Listing date</h3>
                                             <p className="listingsText1">{listings.date_created}</p></ul>
                                             <ul><h3 className="listingsText text-uppercase listing-head">Location</h3>
-                                            <p className="listingsText1">San Tan Valley, Arizona</p></ul>
+                                            <p className="listingsText1">{listings.city}, {listings.state}</p></ul>
                                             <ul><h3 className="listingsText text-uppercase listing-head">Conditon</h3>
-                                            <p className="listingsText1">Excellent</p></ul>
+                                            <p className="listingsText1">{listings.car_condition}</p></ul>
                                             <ul><h3 className="listingsText text-uppercase listing-head">Mileage</h3>
-                                            <p className="listingsText1">12,720 miles</p></ul>
+                                            <p className="listingsText1">{listings.mileage} miles</p></ul>
                                             </ul>
                                         </div>
                                     </div>
