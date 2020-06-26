@@ -139,13 +139,13 @@ Listing1.get('/Listing/:id', (req, res) => {
         });
 })
 
-Listing1.put('/UpdateListing/:id', (req, res) => {
+Listing1.put('/UpdateListing/:id', upload.single('thumbnail'), (req, res) => {
     const id = req.params.id;
 
     Listing.update(req.body, {
         where: { id: id }
     }).then(num => {
-        if (num == 1) {
+        if (num === 1) {
             res.send({
                 message: "Listing was updated successfully."
             });
