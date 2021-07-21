@@ -2,7 +2,8 @@ import Express from "express";
 const TeslaListings = Express.Router();
 import cors from "cors";
 import jwt from "jsonwebtoken";
-
+import multer from 'multer';
+import {v4 as uuidv4} from 'uuid';
 import Listing from "../models/Listing.js";
 import bcrypt from "bcrypt";
 
@@ -10,8 +11,34 @@ TeslaListings.use(cors());
 
 process.env.SECRET_KEY = 'secret';
 
-export const Listing1 = TeslaListings.post('/AddListing', (req, res) => {
+const DIR = './client/public/imgs/';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuidv4() + '-' + fileName)
+    }
+})
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
+
+
+export const Listing1 = TeslaListings.post('/AddListing', upload.single('thumbnail'), (req, res) => {
     const today = new Date();
+    const url = req.protocol + '://' + req.get('host')
     const listingData = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -35,7 +62,7 @@ export const Listing1 = TeslaListings.post('/AddListing', (req, res) => {
         modifications: req.body.modifications,
         made_repairs: req.body.made_repairs,
         own_title: req.body.own_title,
-        thumbnail: req.body.thumbnail,
+        thumbnail: req.file.filename,
         sticker: req.body.sticker,
         pictures: req.body.pictures
     }
@@ -44,11 +71,11 @@ export const Listing1 = TeslaListings.post('/AddListing', (req, res) => {
             email: req.body.email
         }
     }).then(listing => {
-                Listing.create(listingData).then(listing => {
-                    res.json({status: listing.model + ' listed'});
-                }).catch( err => {
-                    res.send('error: ' + err);
-                })
+        Listing.create(listingData).then(listing => {
+            res.json({status: listing.model + ' listed'});
+        }).catch( err => {
+            res.send('error: ' + err);
+        })
     })
         .catch(err => {
             res.send('error: ' + err);
@@ -75,13 +102,27 @@ Listing1.get('/UserListings/:email', (req, res) => {
         where: {
             email: req.params.email
         }}).then(data => {
-            res.send(data);
-        }).catch(err => {
-                res.status(500).send({
-                    message:
-                        err.message || "Some error occurred while retrieving tutorials."
-                });
-            });
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving tutorials."
+        });
+    });
+})
+
+Listing1.get('/public/:thumbnail', (req, res) => {
+    Listing.findAll({
+        where: {
+            thumbnail: req.params.thumbnail
+        }}).then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving tutorials."
+        });
+    });
 })
 
 Listing1.get('/Listing/:id', (req, res) => {
@@ -98,13 +139,13 @@ Listing1.get('/Listing/:id', (req, res) => {
         });
 })
 
-Listing1.put('/UpdateListing/:id', (req, res) => {
+Listing1.put('/UpdateListing/:id', upload.single('thumbnail'), (req, res) => {
     const id = req.params.id;
 
     Listing.update(req.body, {
         where: { id: id }
     }).then(num => {
-        if (num == 1) {
+        if (num === 1) {
             res.send({
                 message: "Listing was updated successfully."
             });
@@ -114,10 +155,10 @@ Listing1.put('/UpdateListing/:id', (req, res) => {
             });
         }
     }).catch(err => {
-            res.status(500).send({
-                message: "Error updating Listing with id=" + id
-            });
+        res.status(500).send({
+            message: "Error updating Listing with id=" + id
         });
+    });
 })
 
 Listing1.delete('/DeleteListing/:id', (req, res) =>{

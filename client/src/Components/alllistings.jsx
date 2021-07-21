@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {allListings} from "./ListingFunctions";
+import NumberFormat from "react-number-format";
+import Filter from './Filter';
 
 class AllListings extends Component{
     constructor(props) {
@@ -12,9 +14,13 @@ class AllListings extends Component{
         //this.searchTitle = this.searchTitle.bind(this);
 
         this.state = {
+            defaultListing: [],
             listings: [],
             currentListing: null,
             currentIndex: -1,
+            sort: '',
+            sortColor: '',
+            sortModel: ''
             //searchTitle: ""
         };
     }
@@ -35,7 +41,8 @@ class AllListings extends Component{
         allListings()
             .then(response => {
                 this.setState({
-                    listings: response.data
+                    listings: response.data,
+                    defaultListing: response.data
                 });
                 console.log(response.data);
             })
@@ -59,30 +66,83 @@ class AllListings extends Component{
         });
     }
 
+    //Sort by Price
+    sorting = (e)=>{
+        const sorting = e.target.value;
+        const sortRes = this.state.listings.sort((a,b)=>{
+            if(sorting==='all'){
+                return a.id>b.id?1:-1
+            }
+            if(sorting==='high'){
+                return a.asking_price<b.asking_price?1:-1
+            }
+            if(sorting==='low'){
+                return a.asking_price>b.asking_price?1:-1
+            }
+        })
+        this.setState({
+            sort:sorting,
+            listings:sortRes
+        }
+        // ,()=>{
+        //     localStorage.setItem('sort', JSON.stringify(this.state.sort));
+        //     localStorage.setItem('data', JSON.stringify(this.state.listings))
+        //}
+        )
+    }
+
+    //Filter by Color
+    filteringColor = (e)=>{
+        let colors = e.target.value;
+        if(colors === ''){
+            this.setState({
+                sortColor:colors,
+                listings: this.state.defaultListing
+            })
+        }
+        else{
+            this.setState({
+                sortColor:colors,
+                listings: this.state.defaultListing.filter(listings => {
+                    return listings.color.indexOf(e.target.value) >= 0
+                })
+            })
+        }
+
+    }
+
+    //Filter by Model
+    filteringModel = (e)=>{
+        let models = e.target.value;
+        if(models === ''){
+            this.setState({
+                sortModel:models,
+                listings: this.state.defaultListing
+            })
+        }
+        else{
+            this.setState({
+                sortModel:models,
+                listings: this.state.defaultListing.filter(listings => {
+                    return listings.model.indexOf(e.target.value) >= 0
+                })
+            })
+        }
+    }
+
     render(){
         const { listings, currentListing, currentIndex } = this.state;
-
         return(
             <div className="list row" style={{paddingTop: "100px"}}>
-                <div className="col-md-8">
-                    <div className="input-group mb-3">
-                        {/*<input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search by title"
-                            value={searchTitle}
-                            onChange={this.onChangeSearchTitle}
-                        />*/}
-                        {/*<div className="input-group-append">
-                            <button
-                                className="btn btn-outline-secondary"
-                                type="button"
-                                onClick={this.searchTitle}
-                            >
-                                Search
-                            </button>
-                        </div>*/}
-                    </div>
+                <div className="col-md-3" >
+                    <Filter
+                        sorting={this.sorting}
+                        sorts={this.state.sort}
+                        filteringColor={this.filteringColor}
+                        sortColor={this.state.sortColor}
+                        filteringModel={this.filteringModel}
+                        sortModel={this.state.sortModel}
+                    />
                 </div>
                 <div className="col-md-6" style={{margin:"auto", width:"50%"}}>
                     <h4>All Listings</h4>
@@ -97,7 +157,7 @@ class AllListings extends Component{
 
                                         </div>
                                         <div className="col-md-4">
-                                            <small className="forsale">For Sale</small>
+                                            <small className="forsale">{listings.listing_type}</small>
                                         </div>
                                         <div className="col-md-4">
 
@@ -106,14 +166,15 @@ class AllListings extends Component{
                                     <div className="row" style={{textAlign:"center"}}>
                                         <div className="col-md-4">
                                             {/*<a className="testimg" href="https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg" style={{backgroundImage: "url(" + 'https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg' + ")"}}/>*/}
-                                            <img src='https://www.teslarati.com/wp-content/uploads/2014/04/Tesla-Model-S-garage-delivery.jpg' height='100' width='190' />
+                                            <img src={process.env.PUBLIC_URL + `/imgs/${listings.thumbnail}`} height='100' width='190' />
+
                                         </div>
                                         <div className="col-md-4">
-                                            <h4 className="text-uppercase" style={{fontSize:"25px", textAlign:"left"}}>{listings.year} / {listings.model} / {listings.color}</h4>
+                                            <h4 className="text-uppercase" style={{fontSize:"25px", textAlign:"left"}}>{listings.year} / {listings.model} / {listings.battery} / {listings.color}</h4>
                                         </div>
                                         <div className="col-md-4">
                                             <h3 className="listingsTextAsking text-uppercase">Asking Price</h3>
-                                            <p className="listingsPrice">$ 45,000.00</p>
+                                            <p className="listingsPrice">$ <NumberFormat value={listings.asking_price} displayType={'text'} thousandSeparator={true} />.00</p>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -121,18 +182,18 @@ class AllListings extends Component{
 
                                         </div>
                                         <div className="col-md-4">
-                                            <p style={{textAlign:"left", margin:"0", lineHeight:"1.2"}}>{listings.summary}</p>
+                                            <p style={{textAlign:"left", margin:"0", lineHeight:"1.2"}}>{listings.summary.substring(0,270)}...</p>
                                         </div>
                                         <div className="col-md-4">
                                             <ul>
-                                            <ul><h3 className="listingsText text-uppercase listing-head">Listing date</h3>
-                                            <p className="listingsText1">{listings.date_created}</p></ul>
-                                            <ul><h3 className="listingsText text-uppercase listing-head">Location</h3>
-                                            <p className="listingsText1">San Tan Valley, Arizona</p></ul>
-                                            <ul><h3 className="listingsText text-uppercase listing-head">Conditon</h3>
-                                            <p className="listingsText1">Excellent</p></ul>
-                                            <ul><h3 className="listingsText text-uppercase listing-head">Mileage</h3>
-                                            <p className="listingsText1">12,720 miles</p></ul>
+                                                <ul><h3 className="listingsText text-uppercase listing-head">Listing date</h3>
+                                                    <p className="listingsText1">{listings.date_created}</p></ul>
+                                                <ul><h3 className="listingsText text-uppercase listing-head">Location</h3>
+                                                    <p className="listingsText1">{listings.city}, {listings.state}</p></ul>
+                                                <ul><h3 className="listingsText text-uppercase listing-head">Conditon</h3>
+                                                    <p className="listingsText1">{listings.car_condition}</p></ul>
+                                                <ul><h3 className="listingsText text-uppercase listing-head">Mileage</h3>
+                                                    <p className="listingsText1">{listings.mileage} miles</p></ul>
                                             </ul>
                                         </div>
                                     </div>
@@ -142,6 +203,7 @@ class AllListings extends Component{
                     </div>
 
                 </div>
+                <div className="col-md-3"></div>
                 {/*<div className="col-md-6">
                     {currentListing ? (
                         <div>
